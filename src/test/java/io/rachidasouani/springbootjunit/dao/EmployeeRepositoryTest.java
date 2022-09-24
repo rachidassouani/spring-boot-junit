@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
@@ -24,26 +25,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Rollback(false)
 public class EmployeeRepositoryTest {
 
-    private final EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     private Employee firstEmployee;
     private Employee secondEmployee;
-
-    public EmployeeRepositoryTest(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     @BeforeEach
     public void init() {
 
         // Arrange: Setting up the data that required for the test case
         firstEmployee = new Employee();
+        firstEmployee.setId(1l);
         firstEmployee.setFirstName("Rachid");
         firstEmployee.setLastName("Assouani");
         firstEmployee.setEmail("rachid@assouani.com");
         firstEmployee.setBirthDate(LocalDate.of(2020, Month.JANUARY, 1));
 
         secondEmployee = new Employee();
+        secondEmployee.setId(2l);
         secondEmployee.setFirstName("Rachida");
         secondEmployee.setLastName("Assouani");
         secondEmployee.setEmail("rachida@assouani.com");
@@ -52,7 +52,7 @@ public class EmployeeRepositoryTest {
 
     @AfterEach
     public void afterEach() {
-        employeeRepository.deleteAll();
+        //employeeRepository.deleteAll();
     }
 
     @Test
